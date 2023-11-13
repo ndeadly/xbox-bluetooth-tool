@@ -158,7 +158,7 @@ int main(int argc, char* argv[]) {
                                 fw_version.rev
                             );
                         } else {
-                            std::printf(CONSOLE_WHITE " Firmware version:       " CONSOLE_RED " error retrieving firmware version (rc=0x%x)\n", rc);
+                            std::printf(CONSOLE_WHITE " Firmware version:       " CONSOLE_RED "error retrieving firmware version (rc=0x%x)\n", rc);
                         }
                         std::printf(CONSOLE_WHITE " Bluetooth support:      %s\n", info.supports_bluetooth ? CONSOLE_GREEN "yes" : CONSOLE_RED "no");
                         std::printf(CONSOLE_WHITE " Bluetooth variant:      %s\n", fw_version.major < 5 ? CONSOLE_GREEN "Classic" : CONSOLE_YELLOW "LE");
