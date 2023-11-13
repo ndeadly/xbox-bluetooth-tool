@@ -161,8 +161,16 @@ int main(int argc, char* argv[]) {
                             std::printf(CONSOLE_WHITE " Firmware version:       " CONSOLE_RED "Error retrieving firmware version (rc=0x%x)\n", rc);
                         }
                         std::printf(CONSOLE_WHITE " Bluetooth support:      %s\n", info.supports_bluetooth ? CONSOLE_GREEN "Yes" : CONSOLE_RED "No");
-                        std::printf(CONSOLE_WHITE " Bluetooth variant:      %s\n", fw_version.major < 5 ? CONSOLE_GREEN "Classic" : CONSOLE_YELLOW "LE");
-                        std::printf(CONSOLE_WHITE " Firmware downgradeable: %s\n", info.model < 1904 ? CONSOLE_GREEN "Yes" : CONSOLE_RED "No");
+                        if (info.supports_bluetooth) {
+                            if (R_SUCCEEDED(rc) && fw_version.major > 0) {
+                                std::printf(CONSOLE_WHITE " Bluetooth variant:      %s\n", fw_version.major < 5 ? CONSOLE_GREEN "Classic" : CONSOLE_YELLOW "LE");
+                            } else {
+                                std::printf(CONSOLE_WHITE " Bluetooth variant:      " CONSOLE_YELLOW "Unknown\n");
+                            }
+
+                            std::printf(CONSOLE_WHITE " Firmware downgradeable: %s\n", ((info.model < 1914) && (info.model >= 1708)) ? CONSOLE_GREEN "Yes" : CONSOLE_RED "No");
+                        }
+ 
                     } else {
                         std::printf(CONSOLE_WHITE " Variant:                Unknown\n");
                     }
