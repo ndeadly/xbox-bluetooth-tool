@@ -69,7 +69,7 @@ std::map<u16, XboxControllerInfo> g_controller_map {
     {0x02E3, {false, 1698, "Xbox One Elite Controller"}},
     {0x02EA, {true,  1708, "Xbox One X|S Controller"}},
     {0x0B00, {true,  1797, "Xbox One Elite Series 2 Controller"}},
-    {0x0B12, {true,  1904, "Xbox Series X|S Controller"}}
+    {0x0B12, {true,  1914, "Xbox Series X|S Controller"}}
 };
 
 Result GetXboxControllerFirmwareVersion(UsbHsInterface *interface, XboxControllerFirmwareVersion *version) {
