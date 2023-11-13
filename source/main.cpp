@@ -149,7 +149,7 @@ int main(int argc, char* argv[]) {
                     std::printf(CONSOLE_WHITE " Product ID:             0x%04x\n", interface->device_desc.idProduct);
                     if (g_controller_map.contains(interface->device_desc.idProduct)) {
                         XboxControllerInfo info = g_controller_map[interface->device_desc.idProduct];
-                        std::printf(CONSOLE_WHITE " Variant:                %s (model %d)\n", info.name, info.model);
+                        std::printf(CONSOLE_WHITE " Variant:                %s (Model %d)\n", info.name, info.model);
                         if (R_SUCCEEDED(rc)) {
                             std::printf(CONSOLE_WHITE " Firmware version:       %d.%d.%d.%d\n",
                                 fw_version.major,
@@ -158,11 +158,11 @@ int main(int argc, char* argv[]) {
                                 fw_version.rev
                             );
                         } else {
-                            std::printf(CONSOLE_WHITE " Firmware version:       " CONSOLE_RED "error retrieving firmware version (rc=0x%x)\n", rc);
+                            std::printf(CONSOLE_WHITE " Firmware version:       " CONSOLE_RED "Error retrieving firmware version (rc=0x%x)\n", rc);
                         }
-                        std::printf(CONSOLE_WHITE " Bluetooth support:      %s\n", info.supports_bluetooth ? CONSOLE_GREEN "yes" : CONSOLE_RED "no");
+                        std::printf(CONSOLE_WHITE " Bluetooth support:      %s\n", info.supports_bluetooth ? CONSOLE_GREEN "Yes" : CONSOLE_RED "No");
                         std::printf(CONSOLE_WHITE " Bluetooth variant:      %s\n", fw_version.major < 5 ? CONSOLE_GREEN "Classic" : CONSOLE_YELLOW "LE");
-                        std::printf(CONSOLE_WHITE " Firmware downgradeable: %s\n", info.model < 1904 ? CONSOLE_GREEN "yes" : CONSOLE_RED "no");
+                        std::printf(CONSOLE_WHITE " Firmware downgradeable: %s\n", info.model < 1904 ? CONSOLE_GREEN "Yes" : CONSOLE_RED "No");
                     } else {
                         std::printf(CONSOLE_WHITE " Variant:                Unknown\n");
                     }
