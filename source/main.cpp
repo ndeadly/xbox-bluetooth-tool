@@ -112,6 +112,7 @@ int main(int argc, char* argv[]) {
 
     std::printf("Xbox Controller Bluetooth Compatibility Tool. 2023 ndeadly\n\n");
     std::printf("Connect an Xbox controller via USB to determine Bluetooth compatibility.\n");
+    std::printf("Please disable sys-con if you have it installed, as it may interfere with USB.\n\n");
     std::printf("Press + to exit.\n\n");
 
     Result rc = usbHsCreateInterfaceAvailableEvent(&g_interface_available_event, true, g_event_index, &g_interface_filter);
