@@ -144,33 +144,36 @@ int main(int argc, char* argv[]) {
                 if (total_entries > 0) {
                     UsbHsInterface *interface = &g_interfaces[0];
 
-                    XboxControllerFirmwareVersion fw_version = {};
-                    rc = GetXboxControllerFirmwareVersion(interface, &fw_version);
-
                     std::printf(CONSOLE_WHITE " Vendor ID:              0x%04x\n", interface->device_desc.idVendor);
                     std::printf(CONSOLE_WHITE " Product ID:             0x%04x\n", interface->device_desc.idProduct);
                     if (g_controller_map.contains(interface->device_desc.idProduct)) {
                         XboxControllerInfo info = g_controller_map[interface->device_desc.idProduct];
+                        bool supports_downgrade = (info.model >= 1708) && (info.model < 1914);
+
                         std::printf(CONSOLE_WHITE " Variant:                %s (Model %d)\n", info.name, info.model);
-                        if (R_SUCCEEDED(rc)) {
-                            std::printf(CONSOLE_WHITE " Firmware version:       %d.%d.%d.%d\n",
-                                fw_version.major,
-                                fw_version.minor,
-                                fw_version.micro,
-                                fw_version.rev
-                            );
-                        } else {
-                            std::printf(CONSOLE_WHITE " Firmware version:       " CONSOLE_RED "Error retrieving firmware version (rc=0x%x)\n", rc);
-                        }
                         std::printf(CONSOLE_WHITE " Bluetooth support:      %s\n", info.supports_bluetooth ? CONSOLE_GREEN "Yes" : CONSOLE_RED "No");
+
+                        XboxControllerFirmwareVersion fw_version = {};
                         if (info.supports_bluetooth) {
-                            if (R_SUCCEEDED(rc) && fw_version.major > 0) {
-                                std::printf(CONSOLE_WHITE " Bluetooth variant:      %s\n", fw_version.major < 5 ? CONSOLE_GREEN "Classic" : CONSOLE_YELLOW "LE");
+                            rc = GetXboxControllerFirmwareVersion(interface, &fw_version);
+                            if (R_SUCCEEDED(rc)) {
+                                std::printf(CONSOLE_WHITE " Firmware version:       %d.%d.%d.%d\n",
+                                    fw_version.major,
+                                    fw_version.minor,
+                                    fw_version.micro,
+                                    fw_version.rev
+                                );
                             } else {
-                                std::printf(CONSOLE_WHITE " Bluetooth variant:      " CONSOLE_YELLOW "Unknown\n");
+                                std::printf(CONSOLE_WHITE " Firmware version:       " CONSOLE_RED "Error retrieving firmware version (rc=0x%x)\n", rc);
                             }
 
-                            std::printf(CONSOLE_WHITE " Firmware downgradeable: %s\n", ((info.model < 1914) && (info.model >= 1708)) ? CONSOLE_GREEN "Yes" : CONSOLE_RED "No");
+                            if (R_SUCCEEDED(rc) && fw_version.major > 0) {
+                                std::printf(CONSOLE_WHITE " Bluetooth LE firmware:  %s\n", fw_version.major < 5 ? CONSOLE_GREEN "No" : CONSOLE_YELLOW "Yes");
+                            } else {
+                                std::printf(CONSOLE_WHITE " Bluetooth LE firmware:  " CONSOLE_YELLOW "Unknown\n");
+                            }
+
+                            std::printf(CONSOLE_WHITE " Firmware downgradeable: %s\n", supports_downgrade ? CONSOLE_GREEN "Yes" : CONSOLE_RED "No");
                         }
  
                     } else {
