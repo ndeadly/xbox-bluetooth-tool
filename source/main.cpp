@@ -67,6 +67,7 @@ struct XboxControllerInfo {
 
 std::map<u16, XboxControllerInfo> g_controller_map {
     {0x02D1, {false, 1537, "Xbox One Controller"}},
+    {0x02DD, {false, 1697, "Xbox One Controller"}},
     {0x02E3, {false, 1698, "Xbox One Elite Controller"}},
     {0x02EA, {true,  1708, "Xbox One X|S Controller"}},
     {0x0B00, {true,  1797, "Xbox One Elite Series 2 Controller"}},
