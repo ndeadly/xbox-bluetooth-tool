@@ -93,16 +93,16 @@ Result GetXboxControllerFirmwareVersion(UsbHsInterface *interface, XboxControlle
                     if (R_SUCCEEDED(rc) && (tx_size == 0x20)) {
                         *version = *reinterpret_cast<XboxControllerFirmwareVersion *>(&g_usb_buffer[0x10]);
                     }
-                }
 
-                usbHsEpClose(&ep_session);
+                    usbHsEpClose(&ep_session);
+                }
 
                 break;
             }
         }
-    }
 
-    usbHsIfClose(&if_session);
+        usbHsIfClose(&if_session);
+    }
 
     return rc;
 }
