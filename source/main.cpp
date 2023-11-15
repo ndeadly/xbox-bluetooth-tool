@@ -60,18 +60,17 @@ struct XboxControllerFirmwareVersion {
 };
 
 struct XboxControllerInfo {
-    bool supports_bluetooth;
     u16 model;
     const char *name;
 };
 
 std::map<u16, XboxControllerInfo> g_controller_map {
-    {0x02D1, {false, 1537, "Xbox One Controller"}},
-    {0x02DD, {false, 1697, "Xbox One Controller"}},
-    {0x02E3, {false, 1698, "Xbox One Elite Controller"}},
-    {0x02EA, {true,  1708, "Xbox One X|S Controller"}},
-    {0x0B00, {true,  1797, "Xbox One Elite Series 2 Controller"}},
-    {0x0B12, {true,  1914, "Xbox Series X|S Controller"}}
+    {0x02D1, {1537, "Xbox One Controller"}},
+    {0x02DD, {1697, "Xbox One Controller"}},
+    {0x02E3, {1698, "Xbox One Elite Controller"}},
+    {0x02EA, {1708, "Xbox One X|S Controller"}},
+    {0x0B00, {1797, "Xbox One Elite Series 2 Controller"}},
+    {0x0B12, {1914, "Xbox Series X|S Controller"}}
 };
 
 Result GetXboxControllerFirmwareVersion(UsbHsInterface *interface, XboxControllerFirmwareVersion *version) {
@@ -149,13 +148,14 @@ int main(int argc, char* argv[]) {
                     std::printf(CONSOLE_WHITE " Product ID:             0x%04x\n", interface->device_desc.idProduct);
                     if (g_controller_map.contains(interface->device_desc.idProduct)) {
                         XboxControllerInfo info = g_controller_map[interface->device_desc.idProduct];
-                        bool supports_downgrade = (info.model >= 1708) && (info.model < 1914);
+                        bool supports_bluetooth = info.model >= 1708;
+                        bool supports_downgrade = supports_bluetooth && (info.model < 1914);
 
                         std::printf(CONSOLE_WHITE " Variant:                %s (Model %d)\n", info.name, info.model);
-                        std::printf(CONSOLE_WHITE " Bluetooth support:      %s\n", info.supports_bluetooth ? CONSOLE_GREEN "Yes" : CONSOLE_RED "No");
+                        std::printf(CONSOLE_WHITE " Bluetooth support:      %s\n", supports_bluetooth ? CONSOLE_GREEN "Yes" : CONSOLE_RED "No");
 
                         XboxControllerFirmwareVersion fw_version = {};
-                        if (info.supports_bluetooth) {
+                        if (supports_bluetooth) {
                             rc = GetXboxControllerFirmwareVersion(interface, &fw_version);
                             if (R_SUCCEEDED(rc)) {
                                 std::printf(CONSOLE_WHITE " Firmware version:       %d.%d.%d.%d\n",
