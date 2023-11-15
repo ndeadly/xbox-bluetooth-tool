@@ -82,8 +82,6 @@ Result GetXboxControllerFirmwareVersion(UsbHsInterface *interface, XboxControlle
         usb_endpoint_descriptor *ep_desc;
         for (int i = 0; i < 15; ++i) {
             ep_desc = &if_session.inf.inf.input_endpoint_descs[i];
-            if (!ep_desc->bEndpointAddress)
-                continue;
 
             if (ep_desc->bEndpointAddress == 0x82) {
                 UsbHsClientEpSession ep_session;
@@ -98,6 +96,8 @@ Result GetXboxControllerFirmwareVersion(UsbHsInterface *interface, XboxControlle
                 }
 
                 usbHsEpClose(&ep_session);
+
+                break;
             }
         }
     }
