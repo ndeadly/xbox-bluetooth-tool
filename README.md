@@ -10,19 +10,6 @@ Download and copy the .nro file to the `/switch` directory on your SD card and l
 
 The following table shows how the program output can be interpreted in terms of compatibility with Mission Control.
 
-<style>
-    table:nth-of-type(1) {
-        display:table;
-        width:100%;
-    }
-    table:nth-of-type(1) th:nth-of-type(2) {
-        width:40%;
-    }
-    table:nth-of-type(1) th:nth-of-type(3) {
-        width:40%;
-    }
-</style>
-
 |                            | **Yes**                                                                                                                                                                                                                                                                                                         | **No**                                                                                                                                                                                                           |
 |----------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Bluetooth Support**      | It is currently possible to use this controller with Mission Control.                                                                                                                                                                                                                                                     | This controller cannot currently be used with Mission Control. This may change in the future with the addition of USB support. For now, check out [sys-con](https://github.com/cathery/sys-con) for USB controllers. |
