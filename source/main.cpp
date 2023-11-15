@@ -37,17 +37,17 @@ void userAppExit(void) {
 }
 #endif
 
-u8 g_event_index = 0;
-Event g_interface_available_event = {};
+constinit u8 g_event_index = 0;
+constinit Event g_interface_available_event = {};
 
-const UsbHsInterfaceFilter g_interface_filter = {
+constexpr UsbHsInterfaceFilter g_interface_filter = {
     .Flags = UsbHsInterfaceFilterFlags_idVendor | UsbHsInterfaceFilterFlags_bcdDevice_Min,
     .idVendor = 0x045e,
     .bcdDevice_Min = 0
 };
 
 constexpr size_t MaxUsbHsInterfacesCount = 16;
-UsbHsInterface g_interfaces[MaxUsbHsInterfacesCount] = {};
+constinit UsbHsInterface g_interfaces[MaxUsbHsInterfacesCount] = {};
 
 constexpr size_t UsbBufferSize = 0x1000;
 alignas(0x1000) constinit u8 g_usb_buffer[UsbBufferSize];
