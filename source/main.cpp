@@ -86,10 +86,11 @@ Result GetXboxControllerFirmwareVersion(UsbHsInterface *interface, XboxControlle
                 UsbHsClientEpSession ep_session;
                 rc = usbHsIfOpenUsbEp(&if_session, &ep_session, 1, ep_desc->wMaxPacketSize, ep_desc);
                 if (R_SUCCEEDED(rc)) {
-                    u32 tx_size = 0;
                     std::memset(g_usb_buffer, 0, UsbBufferSize);
+
+                    u32 tx_size;
                     rc = usbHsEpPostBuffer(&ep_session, g_usb_buffer, 0x20, &tx_size);
-                    if (R_SUCCEEDED(rc)) {
+                    if (R_SUCCEEDED(rc) && (tx_size == 0x20)) {
                         *version = *reinterpret_cast<XboxControllerFirmwareVersion *>(&g_usb_buffer[0x10]);
                     }
                 }
